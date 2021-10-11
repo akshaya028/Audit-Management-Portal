@@ -1,0 +1,53 @@
+<form #projectform="ngForm" (ngSubmit)="saveProjectdetails(requestdata)">
+  <div class="form-group">
+    <label for="projectId" class="control-label"> Project Id :</label>
+    <input required type="text" name="name" [(ngModel)]="requestdata.ProjectId" #productId="ngModel" id="projectId"  >
+  </div>
+  <div class="form-group">
+    <label for="projectName" > Project Name :</label>
+    <input required type="text" name="projectName" [(ngModel)]="requestdata.ProjectName" #projectName="ngModel" id="projectName" >
+  </div>
+  <div class="form-group">
+    <label for="projectManagerName" > Project Manager Name :</label>
+    <input required type="text" name="projectManagerName" [(ngModel)]="requestdata.ProjectManagerName" #projectManagerName="ngModel" id="projectManagerName" >
+  </div>
+  <div class="form-group">
+    <label for="applicationOwnerName"> Application Manager Name :</label>
+    <input required type="text" name="applicationOwnerName" [(ngModel)]="requestdata.ApplicationOwnerName" #applicationOwnerName="ngModel" id="applicationOwnerName" >
+  </div>
+    <div style="margin-left:500px;margin-bottom: 20px;">
+      <button type="submit"> Save </button>
+    </div>
+   
+</form>
+<div class="container">
+
+
+    <h2>Audit Result</h2>           
+    <table class="table">
+      <thead>
+        <tr>
+          <th>AuditId</th>
+          <th>Project Execution Status</th>
+          <th>Remedial Action Duration</th>
+        </tr>
+      </thead>
+      
+      <tbody> 
+        <tr *ngIf='response.projectExecutionStatus=="RED"' class="danger">
+          <td>{{response.auditId}}</td>
+          <td>{{response.projectExecutionStatus}}</td>
+          <td>{{response.remedialActionDuration}}</td>
+        </tr>
+        <tr *ngIf='response.projectExecutionStatus=="GREEN"' class="success">
+          <td>{{response.auditId}}</td>
+          <td>{{response.projectExecutionStatus}}</td>
+          <td>{{response.remedialActionDuration}}</td>
+        </tr>
+      </tbody>
+      
+    </table>
+  </div>
+  
+
+
