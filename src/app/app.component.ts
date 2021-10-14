@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { auditResponse } from './auditResponse';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +6,5 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'AuditSeverity';
-
-
-  constructor()
-  {
-      
-  }
+  title = 'Audit-Management-System';
 }
