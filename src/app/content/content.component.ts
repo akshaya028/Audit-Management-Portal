@@ -12,7 +12,7 @@ export class ContentComponent implements OnInit {
   password:string = '';
   constructor(private router:Router)
   {
-    this.router.navigateByUrl("/login");
+    //this.router.navigateByUrl("/login");
   }
 
   ngOnInit(): void {

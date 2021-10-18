@@ -13,23 +13,47 @@ import { LoginComponent } from './login/login.component';
 import { ErrorComponent } from './error/error.component';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { SeverityComponent } from './severity/severity.component';
+import { AuthguardServiceService } from './authguard-service.service';
+import { AuthenticationGuard } from './authentication.guard';
+import { LoginguardService } from './loginguard.service';
+import { LoginguardGuard } from './loginguard.guard';
+import { HomeComponent } from './home/home.component';
+import { AuditStatusComponent } from './audit-status/audit-status.component';
 
 const routes: Routes = [
+  {
+    path:'',
+    component:LoginComponent,
+    canActivate:[AuthenticationGuard]
+  },
   {    
     path: 'login',
     component: LoginComponent
   },
   {
+    path:'home',
+    component:HomeComponent,
+    canActivate:[AuthenticationGuard]
+  },
+  {
     path: 'error',
-    component: ErrorComponent
+    component: ErrorComponent,
+    canActivate:[AuthenticationGuard]
   },
   {
-    path: 'checklist',
-    component: ChecklistComponent
+    path: 'AuditRequest',
+    component: ChecklistComponent,
+    canActivate:[AuthenticationGuard]//,LoginguardGuard]
   },
   {
-    path: 'severity',
-    component : SeverityComponent
+    path: 'AuditResponse',
+    component : SeverityComponent,
+    canActivate:[AuthenticationGuard]
+  },
+  {
+    path: 'AuditDetails',
+    component : AuditStatusComponent,
+    canActivate:[AuthenticationGuard]
   }
 ];
 @NgModule({
@@ -41,17 +65,24 @@ const routes: Routes = [
     LoginComponent,
     ErrorComponent,
     ChecklistComponent,
-    SeverityComponent
+    SeverityComponent,
+    HomeComponent,
+    AuditStatusComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     [RouterModule.forRoot(routes)],
-    HttpClientModule
+    HttpClientModule,
+
   ],
   exports:[RouterModule],
-  providers: [],
+  providers: [
+    AuthguardServiceService,
+    LoginguardService,
+    { provide: LoginguardGuard, useClass: LoginguardGuard }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

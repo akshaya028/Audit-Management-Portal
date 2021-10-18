@@ -1,4 +1,8 @@
-#checklistcontainer
+.container
 {
-    overflow: auto;
+    padding-top: 5%;
+}
+.table
+{
+    margin-top: 5%;
 }

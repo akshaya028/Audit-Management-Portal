@@ -2,6 +2,7 @@ import { loginDetails } from './../Models/loginDetails';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core'; 
 import {Router} from '@angular/router'; 
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,8 @@ export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
   loginDetailsObject!:loginDetails;
+  loginflag=0;
+  
 
   constructor(private httpClient : HttpClient,private router:Router)
   { 
@@ -21,8 +24,26 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    if(localStorage.getItem("session")===undefined)
+    {
+      localStorage.setItem("session","false");
+    }
+    /*
+    else if(localStorage.getItem("session")=="true")
+    {
+      localStorage.removeItem("session");
+      this.router.navigateByUrl("/login");
+    }*/
   }
-
+  validate():boolean
+  {
+    if(this.username.length==0 && this.password.length==0)
+    {
+      return true;
+    }
+    return false;
+  }
   formSubmitEvent()
   {
     this.loginDetailsObject = new loginDetails(this.username,this.password);
@@ -36,13 +57,19 @@ export class LoginComponent implements OnInit {
       })
     }).subscribe(response => {
       const token = (<any>response).token;
+
       //console.log(token);
       localStorage.setItem("jwt", token);
-      this.router.navigate(["/checklist"]);
+      localStorage.setItem("session","true");
+      this.router.navigate(["/home"]);
     },err =>
     {
       //console.log(err);
-      this.router.navigate(["/error"]);
+      //alert("Invalid username/password");
+      this.loginflag=1;
+      this.username="";
+      this.password="";
+      this.router.navigate(["/login"]);
     });
     
   }
